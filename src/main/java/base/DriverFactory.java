@@ -7,25 +7,25 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 
-
 public class DriverFactory {
 
     private ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     private String browser;
     private Logger log;
+
     public DriverFactory(String browser, Logger log) {
         this.browser = browser.toLowerCase();
         this.log = log;
     }
 
-    public WebDriver createDriver(){
+    public WebDriver createDriver() {
 
-        switch (browser){
-            case"chrome_win":
+        switch (browser) {
+            case "chrome_win":
                 WebDriverManager.chromedriver().setup();
                 driver.set(new ChromeDriver());
                 break;
-            case"firefox_win":
+            case "firefox_win":
                 WebDriverManager.firefoxdriver().setup();
                 driver.set(new FirefoxDriver());
                 break;

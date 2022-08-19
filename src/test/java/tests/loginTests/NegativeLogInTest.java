@@ -4,12 +4,11 @@ import base.TestUtilities;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.herokuapp.LoginPage;
-import pages.herokuapp.SecurePage;
 import pages.herokuapp.WelcomePage;
 
 public class NegativeLogInTest extends TestUtilities {
     @Test
-    public void checkLoginNegative(){
+    public void checkLoginNegative() {
 
         log.info("Go to WelcomePage");
         WelcomePage welcomePage = new WelcomePage(driver, log);
@@ -24,10 +23,9 @@ public class NegativeLogInTest extends TestUtilities {
         log.info("Check the ErrorMessage");
         String expectedErrorMessage = "Your username is invalid!";
         Assert.assertTrue(loginPage.getErrorMessage().contains(expectedErrorMessage),
-                "Actual message is: "+loginPage.getErrorMessage()+"expectedErrorMessage is: "+expectedErrorMessage);
+                "Actual message is: " + loginPage.getErrorMessage() + "expectedErrorMessage is: " + expectedErrorMessage);
 
         log.info("Check the loginButton is present");
         Assert.assertTrue(loginPage.LoginButtonIsDisplayed(), "No login button");
-
     }
 }
