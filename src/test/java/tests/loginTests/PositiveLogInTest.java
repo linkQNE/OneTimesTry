@@ -1,48 +1,37 @@
 package tests.loginTests;
 
 import base.TestUtilities;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import base.BaseTest;
-
-import java.time.Duration;
+import pages.herokuapp.LoginPage;
+import pages.herokuapp.SecurePage;
+import pages.herokuapp.WelcomePage;
 
 public class PositiveLogInTest extends TestUtilities {
 
     @Test
-    public void checkInputField() {
-        String URL = "https://the-internet.herokuapp.com/";
-        String formText = "Form Authentication";
-        String LoginFieldId = "username";
-        String PasswordFieldId = "password";
-        String LoginButtonClass = "radius";
-        driver.navigate().to(URL);
-        driver.findElement(By.linkText(formText)).click();
+    public void checkLoginToSecure() {
 
-        driver.findElement(By.id(LoginFieldId)).sendKeys("tomsmith");
-        driver.findElement(By.id(PasswordFieldId)).sendKeys("SuperSecretPassword!");
+        log.info("Go to WelcomePage");
+        WelcomePage welcomePage = new WelcomePage(driver, log);
+        welcomePage.openPage();
 
-        sleep(4000);
+        log.info("Open LoginPage");
+        LoginPage loginPage = welcomePage.clickFormAuthentication();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        log.info("Login to Secure");
+        SecurePage securePage = loginPage.logIN("tomsmith", "SuperSecretPassword!");
 
-        WebElement loginButton = driver.findElement(By.className(LoginButtonClass));
-        wait.until(ExpectedConditions.elementToBeClickable(loginButton));
-        loginButton.click();
+        log.info("Check is the redirect correct");
+        Assert.assertEquals(securePage.getSecurePageUrl(), securePage.getCurrentUrl());
 
-
-        String ExpectedURL = "https://the-internet.herokuapp.com/secure";
-        Assert.assertEquals(ExpectedURL, driver.getCurrentUrl());
-        Assert.assertTrue(driver.findElement(By.xpath("//a[@class = 'button secondary radius']")).isDisplayed(),
+        log.info("Check is the LogOutButton isDisplayed");
+        Assert.assertTrue(securePage.isLogoutButtonDisplayed(),
                 "The LogOutButton in not Visible");
 
+        log.info("Check the success message");
         String expectedSuccessMessage = "You logged into a secure area!";
-        String actualSuccessMessage = driver.findElement(By.id("flash")).getText();
-        Assert.assertTrue(actualSuccessMessage.contains(expectedSuccessMessage),
-                "actualSuccessMessage: " + actualSuccessMessage + ", not equals to expectedSuccessMessage: " + expectedSuccessMessage);
+        Assert.assertTrue(securePage.getFlashMessage().contains(expectedSuccessMessage),
+                "actualSuccessMessage: " + securePage.getFlashMessage() + ", not equals to expectedSuccessMessage: " + expectedSuccessMessage);
     }
 }

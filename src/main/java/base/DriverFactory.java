@@ -1,19 +1,21 @@
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.sql.DriverManager;
+
 
 public class DriverFactory {
 
     private ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     private String browser;
-
-    public DriverFactory(String browser) {
+    private Logger log;
+    public DriverFactory(String browser, Logger log) {
         this.browser = browser.toLowerCase();
+        this.log = log;
     }
 
     public WebDriver createDriver(){
