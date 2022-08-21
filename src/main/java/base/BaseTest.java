@@ -19,7 +19,7 @@ public class BaseTest {
     protected Logger log;
 
 
-    @Parameters({"browser" })
+    @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
     public void setUP(@Optional("chrome_win") String browser, ITestContext ctx) {
 
