@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import java.lang.reflect.Method;
 import java.time.Duration;
 
 
@@ -17,11 +18,14 @@ public class BaseTest {
 
     protected WebDriver driver;
     protected Logger log;
+    protected String testName;
+    protected String testSuiteName;
+    protected String testMethodName;
 
 
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
-    public void setUP(@Optional("chrome_win") String browser, ITestContext ctx) {
+    public void setUP(Method method, @Optional("chrome_win") String browser, ITestContext ctx) {
 
         String testName = ctx.getCurrentXmlTest().getName();
         log = LogManager.getLogger(testName);
@@ -32,11 +36,16 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         log.info("Start Driver" + browser);
+
+        this.testSuiteName = ctx.getSuite().getName();
+        this.testName = testName;
+        this.testMethodName = method.getName();
     }
 
     @AfterMethod(alwaysRun = true)
     public void shutDown() {
-        driver.quit();
+//        driver.quit();
         log.info("Quit driver");
     }
+    
 }

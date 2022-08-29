@@ -3,6 +3,7 @@ package tests.javaScriptAlertTest;
 import base.TestUtilities;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.herokuapp.JavaScriptAlertPage;
 import pages.herokuapp.WelcomePage;
 
@@ -25,33 +26,38 @@ public class PositiveJavaScriptAlertTest extends TestUtilities {
 
     @Test
     public void checkJSConfirm(){
+        SoftAssert softAssert = new SoftAssert();
+
         WelcomePage welcomePage = new WelcomePage(driver,log);
         welcomePage.openPage();
         JavaScriptAlertPage javaScriptAlertPage = welcomePage.goToJavaScriptAlertPage();
 
         javaScriptAlertPage.clickJSConfirm();
 
-        Assert.assertEquals(javaScriptAlertPage.getAlertText(),"I am a JS Confirm");
+        softAssert.assertEquals(javaScriptAlertPage.getAlertText(),"I am a JS Confirm");
 
         javaScriptAlertPage.acceptAlert();
 
-        Assert.assertEquals(javaScriptAlertPage.getResultText(),"You clicked: Ok");
+        softAssert.assertEquals(javaScriptAlertPage.getResultText(),"You clicked: Ok");
+        softAssert.assertAll();
+
     }
 
     @Test
     public void checkJSPrompt(){
+        SoftAssert softAssert = new SoftAssert();
         WelcomePage welcomePage = new WelcomePage(driver,log);
         welcomePage.openPage();
         JavaScriptAlertPage javaScriptAlertPage = welcomePage.goToJavaScriptAlertPage();
 
         javaScriptAlertPage.clickJSPrompt();
 
-        Assert.assertEquals(javaScriptAlertPage.getAlertText(),"I am a JS prompt");
+        softAssert.assertEquals(javaScriptAlertPage.getAlertText(),"I am a JS prompt");
 
         javaScriptAlertPage.inputTextToAlert("Cat is coming");
         javaScriptAlertPage.acceptAlert();
 
-        Assert.assertEquals(javaScriptAlertPage.getResultText(),"You entered: Cat is coming");
-
+        softAssert.assertEquals(javaScriptAlertPage.getResultText(),"You entered: Cat is coming");
+        softAssert.assertAll();
     }
 }

@@ -17,6 +17,6 @@ public class PositiveMultipleWindowsTest extends TestUtilities {
 
         WindowPage windowPage = multipleWindowsPage.switchToNewWindowTab();
 
-        Assert.assertTrue(windowPage.getSourceOfWindowPage().contains("New Window"), "Text from new window is incorrect");
+        Assert.assertTrue(windowPage.getSourceOfWindowPage().contains("New Window"), "Text from new window is incorrect. AR: " +windowPage.getCurrentPageTitle());
     }
 }

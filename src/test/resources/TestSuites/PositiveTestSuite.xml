@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Positive Tests" parallel="tests" thread-count="3">
+
+    <listeners>
+        <listener class-name="base.TestListener"></listener>
+    </listeners>
+
+    <test name="Positive Chrome">
+        <parameter name="browser" value="chrome_win"/>
+        <classes>
+            <class name="tests.checkBoxesTest.PositiveCheckboxTest"/>
+            <class name="tests.dropDownTest.PositiveDropDownTest"/>
+            <class name="tests.iFrameTests.PositiveWYSIWYGEditorTest"/>
+            <class name="tests.javaScriptAlertTest.PositiveJavaScriptAlertTest"/>
+            <class name="tests.keyPressesTest.PositiveKeyPressesTest"/>
+            <class name="tests.loginTests.PositiveLogInTest"/>
+            <class name="tests.multipleWindowsTests.PositiveMultipleWindowsTest"/>
+        </classes>
+    </test>
+
+    <test name="Positive FireFox">
+        <parameter name="browser" value="firefox_win"/>
+        <classes>
+            <class name="tests.checkBoxesTest.PositiveCheckboxTest"/>
+            <class name="tests.dropDownTest.PositiveDropDownTest"/>
+            <class name="tests.iFrameTests.PositiveWYSIWYGEditorTest"/>
+            <class name="tests.javaScriptAlertTest.PositiveJavaScriptAlertTest"/>
+            <class name="tests.keyPressesTest.PositiveKeyPressesTest"/>
+            <class name="tests.loginTests.PositiveLogInTest"/>
+            <class name="tests.multipleWindowsTests.PositiveMultipleWindowsTest"/>
+        </classes>
+    </test>
+
+    <test name="Smoke Chrome">
+        <parameter name="browser" value="chrome_win"/>
+        <classes>
+            <class name="tests.smokeTests.DragAndDropTest"/>
+            <class name="tests.smokeTests.HoverTest"/>
+            <class name="tests.smokeTests.UploadFileTest"/>
+            <class name="tests.smokeTests.SliderTest"/>
+            <class name="tests.smokeTests.simpleActionsTest"/>
+            <class name="tests.smokeTests.JSErrorTest"/>
+        </classes>
+    </test>
+
+    <test name="Smoke FireFox">
+        <parameter name="browser" value="firefox_win"/>
+        <classes>
+            <class name="tests.smokeTests.DragAndDropTest"/>
+            <class name="tests.smokeTests.HoverTest"/>
+            <class name="tests.smokeTests.UploadFileTest"/>
+            <class name="tests.smokeTests.SliderTest"/>
+            <class name="tests.smokeTests.simpleActionsTest"/>
+            <class name="tests.smokeTests.JSErrorTest"/>
+        </classes>
+    </test>
+</suite>

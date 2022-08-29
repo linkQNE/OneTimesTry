@@ -8,10 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class BasePage {
 
@@ -92,17 +91,21 @@ public class BasePage {
             String windowHandle = windowsIteration.next().toString();
             if (!windowHandle.equals(firstWindow)) {
                 driver.switchTo().window(windowHandle);
-                if (getCurrentPageTitle().equals(title)) {
+                if (getCurrentPageTitle().contains(title)) {
                     break;
                 }
             }
         }
     }
 
+    public void switchToTabByIndex(int index) {
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(index));
+    }
+
     public void createNewTab() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.open()");
-
 //        js.executeScript("document.getElementById('').style.visibility='visible'");   MAKE ELEMENT VISIBLE (FOR INPUT FIELDS)
     }
 
@@ -120,8 +123,6 @@ public class BasePage {
     }
 
     public void scrollPageToElement(By locator) {
-
-
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", find(locator));
     }
 
@@ -138,4 +139,14 @@ public class BasePage {
         js.executeScript("function createEvent(typeOfEvent) {\n" + "var event =document.createEvent(\"CustomEvent\");\n" + "event.initCustomEvent(typeOfEvent,true, true, null);\n" + "event.dataTransfer = {\n" + "data: {},\n" + "setData: function (key, value) {\n" + "this.data[key] = value;\n" + "},\n" + "getData: function (key) {\n" + "return this.data[key];\n" + "}\n" + "};\n" + "return event;\n" + "}\n" + "\n" + "function dispatchEvent(element, event,transferData) {\n" + "if (transferData !== undefined) {\n" + "event.dataTransfer = transferData;\n" + "}\n" + "if (element.dispatchEvent) {\n" + "element.dispatchEvent(event);\n" + "} else if (element.fireEvent) {\n" + "element.fireEvent(\"on\" + event.type, event);\n" + "}\n" + "}\n" + "\n" + "function simulateHTML5DragAndDrop(element, destination) {\n" + "var dragStartEvent =createEvent('dragstart');\n" + "dispatchEvent(element, dragStartEvent);\n" + "var dropEvent = createEvent('drop');\n" + "dispatchEvent(destination, dropEvent,dragStartEvent.dataTransfer);\n" + "var dragEndEvent = createEvent('dragend');\n" + "dispatchEvent(element, dragEndEvent,dropEvent.dataTransfer);\n" + "}\n" + "\n" + "var source = arguments[0];\n" + "var destination = arguments[1];\n" + "simulateHTML5DragAndDrop(source,destination);", find(locatorA), find(locatorB));
     }
 
+    public String getSeconds() {
+        return (new SimpleDateFormat("SSS").format(new Date()));
+    }
+
+    public void openNewTabAndSwitchTo() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.open()");
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+    }
 }
